@@ -110,7 +110,8 @@ let rec combine l1 l2 =
 
 (* TERCERA PARTE *)
 let rec init len f =
-  match (len >= 0) with
-    true -> if len = 0 then []
-            else (f len)::init (len-1) f
-  | false -> raise (Failure "Invalid_argument");;
+  match (len, len >= 0) with
+    (0, true)  -> []
+  | (_, true)  -> if len-1 = 0 then [f 0]
+                  else (f (len-1))::init (len-1) f
+  | (_, false) -> raise (Failure "Invalid_argument");;
