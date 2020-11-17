@@ -115,3 +115,36 @@ let rec init len f =
   | (_, true)  -> if len-1 = 0 then [f 0]
                   else (f (len-1))::init (len-1) f
   | (_, false) -> raise (Failure "Invalid_argument");;
+
+let rec rev l =
+  let rec aux_rev aux = function
+    | [] -> aux
+    | h::t -> aux_rev (h::aux) t in
+  aux_rev [] l;;
+
+let rec rev_append l1 l2 =
+  let rec aux_rev aux =
+    match (l1, l2) with
+      ([],[]) -> []
+    | ([], h::t) -> aux_rev (h::aux) t in aux_rev [] l2
+    | (h::t, []) -> aux_rev (h::aux) t in aux_rev [] l1
+    | (h1::t1, h2::t2) -> let rec append l1 l2 =
+                            match l1 with
+                              [] -> l2
+                            | h::t -> h::append t l2 in
+                          append (aux_rev (h::aux) t in aux_rev [] l1)
+                                 (aux_rev (h::aux) t in aux_rev [] l2);;
+
+let rec concat l1 l2 =
+
+let rec flatten l1 l2 =
+
+let rec map f l =
+
+let rec rev_map f l =
+
+let rec map2 f l1 l2 =
+
+let rec fold_left f a l =
+
+let rec fold_right f l a =
