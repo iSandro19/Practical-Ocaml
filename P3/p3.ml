@@ -10,7 +10,6 @@ let rec gcd a b =
   else                (* En caso contrario: *)
     gcd b (a mod b);; (* Hacemos el MCD de b y del módulo de a y b. *)
 
-
 (* Ejercicio 2: Explicación de función is_prm *)
 let is_prm n =
   let rec not_divisible_from d =

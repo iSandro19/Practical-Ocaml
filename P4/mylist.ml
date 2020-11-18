@@ -44,7 +44,6 @@ let rec append l1 l2 =
     [] -> l2
   | h::t -> h::append t l2;;
 
-
 (* SEGUNDA PARTE *)
 
 (* Función find *)
@@ -113,10 +112,10 @@ let rec combine l1 l2 =
 (* Función init *)
 let rec init len f =
   if len < 0 then raise (Failure "Invalid_argument")
-  else
+  else 
     match len with
       0 -> []
-    | x -> (f (x-1))::init (x-1) f;;
+    | x -> (f(x-1))::init(x-1)f;;
 
 (* Función rev *)
 let rev =
@@ -132,7 +131,10 @@ let rec rev_append l1 l2 =
   | h::t -> rev_append t (h::l2);;
 
 (* Función concat *)
-let rec concat l1 =
+let rec concat l = 
+  match l with
+    [] -> l
+  | h::t -> h::[]
 
 (* Función flatten *)
 let rec flatten l1 =
