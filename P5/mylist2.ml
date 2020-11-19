@@ -33,10 +33,13 @@ let rec compare_lengths l1 l2 =
     
 (* Función nth *)
 let rec nth l p =
-  match l with
-    [] -> raise (Failure "nth")
-  | h::t -> if p = 0 then h
-            else nth t (p-1);;  
+  if p < 0
+    then raise (Invalid_argument "nth")
+  else
+    match l with
+      [] -> raise (Failure "nth")
+    | h::t -> if p = 0 then h
+              else nth t (p-1);;  
 
 (* Función append *)
 let rec append l1 l2 =
@@ -49,7 +52,7 @@ let rec append l1 l2 =
 (* Función find *)
 let rec find c l=
   match l with
-    [] -> raise (Failure "Not found")
+    [] -> raise (Not_found)
   | h::t -> if (c h) then h
             else find c t;;
 
@@ -105,14 +108,14 @@ let rec combine l1 l2 =
   match (l1, l2) with
     ([], []) -> []
   | (h1::t1, h2::t2) -> (h1,h2)::(combine t1 t2)
-  | ([], _::_) | (_::_, []) -> raise (Failure "Invalid_Argument");;
+  | ([], _::_) | (_::_, []) -> raise (Invalid_argument "combine");;
 
 (* TERCERA PARTE *)
 
 (* Función init *)
 let rec init len f =
   if len < 0
-    then raise (Failure "Invalid_argument")
+    then raise (Invalid_argument ("init"))
   else 
     let rec aux_init cnt n f =
       if cnt >= n
@@ -172,7 +175,7 @@ let rec map2 f l1 l2 =
   match (l1,l2) with
     ([],[]) -> []
   | (h1::t1, h2::t2) -> (f h1 h2)::(map2 f t1 t2)
-  | (_::_, []) | ([], _::_) -> raise (Failure "Invalid_argument");;
+  | (_::_, []) | ([], _::_) -> raise (Invalid_argument "map2");;
 
 (* Función fold_left *)
 let rec fold_left f a = function
