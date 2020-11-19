@@ -1,4 +1,4 @@
-(* Título:  Práctica 3 - Ejercicios 1, 2 y 3  *)
+(* Título:  Práctica 5 - Ejercicios listas    *)
 (* Author:  Óscar Alejandro Manteiga Seoane   *)
 (* Login:   oscar.manteiga@udc.es             *)
 (* Grupo:   4.5                               *)
@@ -25,7 +25,7 @@ let rec length l =
 
 (* Función compare_lengths *)
 let rec compare_lengths l1 l2 =
-  match (l1, l2) with
+  match l1, l2 with
     [],[] -> 0
   | [], _ -> -1
   | _, [] -> 1
@@ -174,8 +174,8 @@ let rec rev_map f =
 let rec map2 f l1 l2 =
   match (l1,l2) with
     ([],[]) -> []
-  | (h1::t1, h2::t2) -> (f h1 h2)::(map2 f t1 t2)
-  | (_::_, []) | ([], _::_) -> raise (Invalid_argument "map2");;
+  | (_::_, []) | ([], _::_) -> raise (Invalid_argument "map2")
+  | (h1::t1, h2::t2) -> (f h1 h2)::(map2 f t1 t2);;
 
 (* Función fold_left *)
 let rec fold_left f a = function
