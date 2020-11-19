@@ -50,9 +50,18 @@ let rec lprod l1 l2 =
       | h::t -> h::append t l2 in
       append (aux l2) (lprod t l2);;
 
-let rec divide l1 l2 =
-  let rec num aux =
-    if (aux mod 2) = 0
-      then (*  *)
-    else
-      (*  *)
+let rec divide l =
+  match l with
+    [] -> ([],[])
+  | h::t ->
+    let rec aux n = n+1 in
+    if (aux 0) = 0
+      then (h::fst(divide t), [])
+    else ([], h::snd(divide t));;
+
+let split list n =
+  let rec aux i acc = function
+    | [] -> List.rev acc, []
+    | h :: t as l -> if i = 0 then List.rev acc, l
+                      else aux (i-1) (h :: acc) t  in
+  aux n [] list;;
