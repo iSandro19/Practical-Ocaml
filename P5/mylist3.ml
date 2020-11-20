@@ -31,9 +31,18 @@ let remove_all item =
 let rec ldif l1 l2 =
   match l2 with
     [] ->  l1
-  | h::t -> ldif (remove_all h l1) t;;
-(* Incorporamos la función remove_all anterior
-  para evitar incorporar código redundante *)
+  | h::t ->
+    let rec remove aux = function
+    | [] ->
+      let rec rev rev_aux = function
+        [] -> rev_aux
+      | hr::tr -> rev (hr::rev_aux) tr in
+      rev [] aux
+    | hx::tx ->
+      if hx = h
+        then remove aux tx
+      else remove (hx::aux) tx in
+    ldif (remove [] l1) t;;
 
 (* Función lprod *)
 let rec lprod l1 l2 =
@@ -51,17 +60,14 @@ let rec lprod l1 l2 =
       append (aux l2) (lprod t l2);;
 
 let rec divide l =
-  match l with
-    [] -> ([],[])
+  let rec aux i even odd = function
+    [] ->
+      let rec rev aux = function
+          [] -> aux
+        | h::t -> rev (h::aux) t in
+      rev [] even, rev [] odd
   | h::t ->
-    let rec aux n = n+1 in
-    if (aux 0) = 0
-      then (h::fst(divide t), [])
-    else ([], h::snd(divide t));;
-
-let split list n =
-  let rec aux i acc = function
-    | [] -> List.rev acc, []
-    | h :: t as l -> if i = 0 then List.rev acc, l
-                      else aux (i-1) (h :: acc) t  in
-  aux n [] list;;
+    if (i mod 2) = 0
+      then aux (i+1) (h::even) odd t
+    else aux (i+1) even (h::odd) t in
+  aux 0 [] [] l;;
