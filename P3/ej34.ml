@@ -1,4 +1,4 @@
-(* Título:  Práctica 3 - Ejercicios 1, 2 y 3  *)
+(* Título:  Práctica 3 - Optativo goldbach    *)
 (* Author:  Óscar Alejandro Manteiga Seoane   *)
 (* Login:   oscar.manteiga@udc.es             *)
 (* Grupo:   4.5                               *)
