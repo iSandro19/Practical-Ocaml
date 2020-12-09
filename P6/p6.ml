@@ -38,13 +38,21 @@ let from1to n =
     else aux (n-1) (n::l)
   in aux n [];;
 
-let append = List.append;;
+let append l1 l2 =
+  let rec aux l l1 l2 =
+    match (l1, l2) with
+    | ([], []) -> List.rev l
+    | (h1::t1, []) -> l1
+    | ([], h2::t2) -> aux (h2::l) [] t2
+    | (h1::t1, h2::t2) -> aux (h1::l) t1 l2
+  in aux [] l1 l2;;
 
-let append' l1 l2 =
-
-let map = List.map;;
-
-let map' f l = 
+let map f l = 
+  let rec aux r l =
+    match l with
+    | [] -> List.rev r
+    | h::t -> aux ((f h)::r) t
+  in aux [] l;;
 
 let power x y =
   let rec innerpower y k =
@@ -59,8 +67,8 @@ let incseg l =
     match (r, l) with
     | ([], []) -> r
     | ([], h1::h2::t) -> aux (h1::[]) (h2::t)
-    | (hr::tr, []) -> List.rev r (* Caso final *)
-    | ([], hl::[]) -> hl::r  (* Caso final *)
+    | (hr::tr, []) -> List.rev r
+    | ([], hl::[]) -> hl::r
     | (hr::tr, hl::tl) -> aux ((hr + hl)::r) tl
   in aux [] l;;
 
@@ -70,7 +78,6 @@ let rec last l =
   | x::[] -> x
   | h::t -> last t;;
     
-
 let remove x l =
   let rec aux r l cnt =
     match l with
