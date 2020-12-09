@@ -40,11 +40,11 @@ let from1to n =
 
 let append = List.append;;
 
-let append' l1 l2 = 
+let append' l1 l2 =
 
 let map = List.map;;
 
-let map f l = 
+let map' f l = 
 
 let power x y =
   let rec innerpower y k =
@@ -55,23 +55,30 @@ let power x y =
     else invalid_arg "power";;
 
 let incseg l =
-  List.fold_right (fun x t -> x::List.map ((+) x) t) l [];;
-
-let incseg ' l =
-
-let rec remove x = function
-  [] -> []
-| h::t -> if x = h then t
-          else h::remove x t;;
-
-let remove' x l =
   let rec aux r l =
+    match (r, l) with
+    | ([], []) -> r
+    | ([], h1::h2::t) -> aux (h1::[]) (h2::t)
+    | (hr::tr, []) -> List.rev r (* Caso final *)
+    | ([], hl::[]) -> hl::r  (* Caso final *)
+    | (hr::tr, hl::tl) -> aux ((hr + hl)::r) tl
+  in aux [] l;;
+
+let rec last l =
+  match l with
+    [] -> failwith "last"
+  | x::[] -> x
+  | h::t -> last t;;
+    
+
+let remove x l =
+  let rec aux r l cnt =
     match l with
       [] -> List.rev r
     | h::t ->
-      if h = x then aux r t
-      else aux (h::r) t
-  in aux [] l;;
+      if h = x && cnt = 0 then aux r t (cnt+1)
+      else aux (h::r) t cnt
+  in aux [] l 0;;
 
 let insert x l =
   let rec aux bf af =
@@ -82,10 +89,11 @@ let insert x l =
       else aux (h::bf) t
   in aux [] l;;
 
-let rec insert_gen f x l = match l with
-  [] -> [x]
-| h::t -> if f x h then x::l
-          else h::insert_gen f x t;;
-
 let insert_gen f x l =
-  
+  let rec aux bf af =
+    match af with
+      [] -> List.rev (x::bf)
+    | h::t ->
+      if f x h then List.rev_append bf (x::af)
+      else aux (h::bf) t
+  in aux [] l;;
