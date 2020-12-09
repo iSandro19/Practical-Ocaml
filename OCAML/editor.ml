@@ -195,3 +195,13 @@ let tl = function
 let rec last = function
     h::[] -> h
     | h::t -> last t;;
+
+let rec sorted = function
+    h1::h2::t -> h1 <= h2 && sorted (h2::t)
+| _ -> true;; (* No recursiva terminal! *)
+
+let insert_sort l =
+    let rec aux ord = function
+        [] -> ord
+    | h::t -> aux (insert' h ord) t
+in aux [] l;;
