@@ -25,13 +25,13 @@ let rec qsort2 ord =
  * encontrar dicho elemento.
  * 
  *    Ejemplo de esto:
-        - Array = [0, 1, 2, 3, ..., 299999]
-        - Cogemos el 0 y buscamos el primer elemento menor
-        - Como no hay nminguno hai que recorrer todo el array
-        - Asi sucesivamente...
-    
-      Esto no es el único problema. Quicksort 1 no es recursivo terminal, por lo que
-    no podrá ordenar arrays de gran tamaño como el que se define a continuación:
+ *      - Array = [0, 1, 2, 3, ..., 299999]
+ *      - Cogemos el 0 y buscamos el primer elemento menor
+ *      - Como no hay nminguno hai que recorrer todo el array
+ *      - Asi sucesivamente...
+ *   
+ *    Esto no es el único problema. Quicksort 1 no es recursivo terminal, por lo que
+ *   no podrá ordenar arrays de gran tamaño como el que se define a continuación:
  *)
 
 let l1 = List.init 500000 (fun x -> (Random.int 499999));;
@@ -39,7 +39,7 @@ let l1 = List.init 500000 (fun x -> (Random.int 499999));;
 (* 
  *    Esta lista l1 no puede ordenarse con qsort1, pero si con qsort2, por culpa de la
  * recursividad terminal.
-      Pasemos a analizar el tiempo de ejecución:
+ *    Pasemos a analizar el tiempo de ejecución:
  *)
 
 let crono f x =
@@ -69,7 +69,7 @@ let crono f x =
 
 (*    Importante mencionar que la medición de tiempos dependerá de las características de la máquina y
  * del estado de la misma. A mayores, los tiempos no incluyen el proceso de generar los vectores.
- * Por si es de interés, las características básicas de la máquina (HP Omen 15-ax014ns) son:
+ * Las características básicas de la máquina (HP Omen 15-ax014ns) son:
  *    - Intel Core i5-6300HQ
  *    - 8GB RAM DDR4 a 2666MHz
  *)
