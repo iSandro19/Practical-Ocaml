@@ -10,12 +10,12 @@ let maxl l =
   let rec aux i l =
     match l with
     | [] -> raise (Failure "maxl")
-    | h::[] -> h
+    | h::[] -> i
     | h::t ->
       if h > i
         then aux h t
       else aux i t
-  in aux 0 l;;
+  in aux (List.hd l) l;;
 
 let to0from n =
   let rec aux n l =
