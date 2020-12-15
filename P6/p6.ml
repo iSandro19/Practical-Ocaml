@@ -10,7 +10,7 @@ let maxl l =
   let rec aux i l =
     match l with
     | [] -> raise (Failure "maxl")
-    | h::[] -> i
+    | h::[] -> if h > i then h else i
     | h::t ->
       if h > i
         then aux h t
