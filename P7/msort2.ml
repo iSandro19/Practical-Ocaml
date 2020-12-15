@@ -10,7 +10,7 @@ let rec divide l =
     in (h1::t1, h2::t2)
   | _ -> l, [];;
 
-(*Función redefinida con tipo ('a -> 'a -> bool) *)
+(* Función redefinida con tipo ('a -> 'a -> bool) *)
 let rec merge ord (l1, l2) =
   match (l1, l2) with
     ([], l) | (l, []) -> l
@@ -19,7 +19,7 @@ let rec merge ord (l1, l2) =
       then h1::(merge ord (t1, h2::t2))
     else h2::(merge ord (h1::t1, t2));;
 
-(*Función redefinida con tipo ('a -> 'a -> bool) *)
+(* Función redefinida con tipo ('a -> 'a -> bool) *)
 let rec msort1 ord l =
   match l with
     [] | _::[] -> l

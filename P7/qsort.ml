@@ -19,10 +19,12 @@ let rec qsort2 ord =
 
 (*
  *    Esta implementación tendrá un nefasto rendimiento si el vector que queremos
- * está ya ordenado (tanto ascendentemento como descendentemente). Esto se debe
- * a que tiene que encontrar el primer valor que cumple la condición y, si el
- * vector está ordenado puede darse el caso que tenga que recorrerlo todo para 
- * encontrar dicho elemento.
+ * está ya ordenado (tanto ascendentemento como descendentemente) o deja muchos elementos
+ * a un lado. Esto se debe a que tiene que encontrar el primer valor que cumple la 
+ * condición y, si el vector está ordenado puede darse el caso que tenga que recorrerlo
+ * todo para encontrar dicho elemento dejando todos los elementos a un lado. De esta forma,
+ * siempre que se dejen muchos elementos a un lado necesitaremos una enorme cantidad de
+ * memoria para ejecutar el cálculo.
  * 
  *    Ejemplo de esto:
  *      - Array = [0, 1, 2, 3, ..., 299999]
@@ -31,10 +33,10 @@ let rec qsort2 ord =
  *      - Asi sucesivamente...
  *   
  *    Esto no es el único problema. Quicksort 1 no es recursivo terminal, por lo que
- *   no podrá ordenar arrays de gran tamaño como el que se define a continuación:
+ * no podrá ordenar arrays de gran tamaño como el que se define a continuación:
  *)
 
-let l1 = List.init 500000 (fun x -> (Random.int 499999));;
+let l1 = List.init 1000000 (fun x -> (Random.int 999999));;
 
 (* 
  *    Esta lista l1 no puede ordenarse con qsort1, pero si con qsort2, por culpa de la
