@@ -205,3 +205,25 @@ let insert_sort l =
         [] -> ord
     | h::t -> aux (insert' h ord) t
 in aux [] l;;
+
+(* Problema de las reinas *)
+
+let in_danger (i1,j1) (i2,j2) =
+    i1 = i2 ||
+    j1 = j2 ||
+    abs(i2-i1) = abs(j2-j1);;
+
+let rec compatible p = function
+        [] -> true
+    | h::t -> not (in_danger p h) && compatible p t;;
+
+let reinas n = (* n >= 0 *)
+    let rec completa path (i,j) =
+        if i > n then [path]
+        else if j > n then []
+        else if compatible (i,j) path
+            then match completa ((i,j)::path) (i+1,1) with
+                [] -> completa path (i, j+1)
+               | s -> s
+        else completa path (i,j+1)
+    in completa [] (1,1);;
