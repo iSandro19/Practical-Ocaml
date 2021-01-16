@@ -277,6 +277,10 @@ let rec prod = function
 		Empty -> 1.0
 	| Node (x, l, r) -> x *. (prod 1) *. (prod r);;
 
+let rec mirror = function
+		Empty ->  Empty
+	| Node (x, l, r) -> Node (x, mirror r, mirror l);;
+
 type 'a option =
 		Some of 'a
 	| None;;
