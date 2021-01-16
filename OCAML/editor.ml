@@ -250,3 +250,66 @@ let reinas n = (* n >= 0 *)
 							 | s -> s
 				else completa path (i,j+1)
 		in completa [] (1,1);;
+
+(* Árboles *)
+
+type 'a tree =
+		V
+	| N of 'a * 'a tree * 'a tree;;
+
+let t = Node (3, Node (8, Empty, Empty),
+								 Node (2, Node (5, Empty, Empty),
+													Node (1, Empty, Empty)));;
+
+let rec nnodos = function
+		V -> 0
+	| N (_,i,d) -> 1 + nnodos i + nnodos d;;
+
+let rec altura = function
+		V -> 0
+	| N (_,i,d) -> 1 + (max (altura i) (altura d));;
+													
+let rec sum = function
+		Empty -> 0
+	| Node (x, l, r) -> x + (sum 1) + (sum r);;
+
+let rec prod = function
+		Empty -> 1.0
+	| Node (x, l, r) -> x *. (prod 1) *. (prod r);;
+
+type 'a option =
+		Some of 'a
+	| None;;
+
+type numero =
+	F of float | I of int;;
+
+let suma n1, n2 =
+	match n1, n2 with
+			I x, I y -> I (x+y)
+		| F x, F y -> F (x+.y)
+		| I x, F y -> F ((float x) + .y)
+		| F x, I y -> F (x +. (float y));;
+
+type 'a btree =
+		Leaf of 'a
+	| Node of 'a * 'a btree * 'a btree;;
+
+let l x = Leaf x;;
+
+let b1 = Node (6, l 5, l 11);;
+
+type 'a gtree =
+	GT of 'a * 'a gtree list;;
+
+let h x = GT (x, []);;
+
+let g = GT (2, [GT (7, [h 2; h 10; GT (6, [h 5; h 11])]); GT (5, [GT (9, [h 4])])]);;
+
+let rec chained = function
+  [] | [_] -> true
+  | (x1,y1)::((x2,y2)::t as l) ->
+      let dx = abs (x1-x2) and dy = abs (y1-y2) in
+          ( dx = 1 && dy = 2 || dx = 2 && dy = 1 ) &&
+          not (List.mem (x1,y1) l) &&
+          chained l;; 
