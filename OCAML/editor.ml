@@ -316,4 +316,40 @@ let rec chained = function
       let dx = abs (x1-x2) and dy = abs (y1-y2) in
           ( dx = 1 && dy = 2 || dx = 2 && dy = 1 ) &&
           not (List.mem (x1,y1) l) &&
-          chained l;; 
+					chained l;; 
+					
+(* Entrada y salida *)
+
+output_char;;
+stdout;;
+output_char stdout 'X';;
+
+let print_char c = output_char stdout c;; (* Ya definida *)
+
+let _ = print_char 'A' in let _ = print_char 'B' in let _ = print_char 'C' in print_char '\n';;
+print_char 'A' ; print_char 'B' ; print_char 'C' ; print_char '\n';; (* Composición secuencial *)
+
+let output_string canal s =
+	let n = String.length s in
+		let rec loop i =
+			if i >= n then ()
+			else (output_char canal s.[i];
+						loop (i+1))
+		in loop 0;;
+
+let print_string s = output_string stdout s;;
+let print_endline s = output_string stdout (s ^ '\n');;
+let print_newline () = print_endline "";;
+
+input_char;;
+stdin;;
+input_char stdin;;
+
+input_line;;
+
+open_out;;
+let canal = open_out "prueba";;
+
+flush canal;;
+
+close_out canal;;
