@@ -353,3 +353,37 @@ let canal = open_out "prueba";;
 flush canal;;
 
 close_out canal;;
+
+let rec output_string_list out = function
+		[] -> ()
+	| h::t -> output_string out (h ^ "\n");
+						output_string_list out t;;
+
+let rec iter p = function
+		[] -> ()
+	| h::t -> p h ; iter p t;;
+
+let output_string_list out l =
+	List.iter (fun s -> output_string out (s ^ "\n")) l;;
+
+let rec input_string_list inp =
+	try let s = input_line inp in
+		s :: input_string_list inp
+	with End_of_file -> [];;
+
+pos_in;; (* Current position reading at in_channel *)
+
+(* Imperativo *)
+
+let i = ref 8;; (* ref content = 8 *)
+(!) i;; (* int = 8 *)
+!i
+
+for i = 1 to 9+1 do print_string (string_of_int i) done;;
+
+let fact n = 
+	let f = ref 1 in 
+	for i = 1 to n do
+		f := !f * i
+	done; !f;;
+
