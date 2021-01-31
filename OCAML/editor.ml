@@ -379,11 +379,97 @@ let i = ref 8;; (* ref content = 8 *)
 (!) i;; (* int = 8 *)
 !i
 
+(* Bucles for *)
 for i = 1 to 9+1 do print_string (string_of_int i) done;;
 
 let fact n = 
 	let f = ref 1 in 
 	for i = 1 to n do
 		f := !f * i
-	done; !f;;
+	done;
+	!f;;
+
+(* Bucles while *)
+let fact n =
+	let f = ref 1
+	and i = ref 1 in
+	while !i <= n do
+		f := !f * !i;
+		i := !i + 1
+	done;
+	!f;;
+
+(* Variables globales *)
+let n = ref 0;;
+
+let turno () =
+	n := !n + 1;
+	!n;;
+
+let reset () =
+	n := 0;;
+
+(* Variables locales *)
+let turno =
+	let n = ref 0 in
+	fun () ->
+		n := !n + 1;
+		!n;;
+
+(* Módulos en el propio código *)
+module Counter : sig
+	val turno : unit -> int
+	val reset : unit -> unit
+end =
+struct
+	let n = ref 0
+	let turno () =
+		n := !n + 1;
+		!n
+	let reset () =
+		n := 0
+end
+
+(* Functor -> Nos permite hacer diferentes modulos *)
+module Counter () : sig
+	val turno : unit -> int
+	val reset : unit -> unit
+end =
+struct
+	let n = ref 0
+	let turno () =
+		n := !n + 1;
+		!n
+	let reset () =
+		n := 0
+end
+
+(* Arrays *)
+[||];;
+[|1;2;3|];;
+let v = [|1;2;3|];;
+
+v.(0);;
+Array.length v;;
+Array.get v 1;;
+Array.set v 1 100;;
+v.(1) <- 30;;
+
+Array.make 10 0;;
+Array.init 10 (fun x -> x);;
+
+Array.sort compare v;;
+v;;
+
+let w = Array.copy v;;
+
+let vprod v1 v2 =
+	if Array.length v1 = Array.length v2
+	then
+		let p = ref 0. in
+		for i = 0 to Array.length v1 - 1 do
+			p := !p +. v1.(i) *. v2.(i)
+		done;
+		!p
+	else raise (Invalid_argument "vprod");;
 
