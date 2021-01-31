@@ -473,3 +473,48 @@ let vprod v1 v2 =
 		!p
 	else raise (Invalid_argument "vprod");;
 
+let vprod v1 v2 =
+	Array.fold_left (+.) 0. (Array.map2 ( *.) v1 v2);;
+
+(* Registros (structs) *)
+type persona = {nombre : string; edad : int};;
+
+let p1 = {nombre "Sandro"; edad = 19};;
+p1.nombre;; p1.edad;;
+let mas_viejo p = {p with edad = p.edad + 1};;
+
+type persona = {nombre : string; mutable edad : int};;
+let p2 = {nombre "Maria"; edad = 19};;
+p2.edad <- 18;;
+
+let envejece p = p.edad <- p.edad + 1;;
+
+(* POO *)
+let c1 = object
+	val mutable n = 0
+	method next = n <- n + 1; n
+	method reset = n <- 0
+end;;
+
+c1#next;;
+
+let double_next c = 2 * c#next;;
+
+let double c = object
+	method next = 2 * c#next;
+	method reset = c#reset
+end;;
+
+let c2 = double c1;;
+
+class counter = object
+	val mutable n = 0
+	method next = n <- n + 1; n
+	method reset = n <- 0
+end;;
+
+let c3 = new counter;;
+
+c1#reset;;
+[c1#next;c1#next;c1#next];; (*[3;2;1]*)
+
