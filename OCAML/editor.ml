@@ -490,6 +490,8 @@ p2.edad <- 18;;
 let envejece p = p.edad <- p.edad + 1;;
 
 (* POO *)
+
+(* Objetos *)
 let c1 = object
 	val mutable n = 0
 	method next = n <- n + 1; n
@@ -507,6 +509,7 @@ end;;
 
 let c2 = double c1;;
 
+(* Clases *)
 class counter = object
 	val mutable n = 0
 	method next = n <- n + 1; n
@@ -517,4 +520,18 @@ let c3 = new counter;;
 
 c1#reset;;
 [c1#next;c1#next;c1#next];; (*[3;2;1]*)
+
+class counter_set = object
+	val mutable n = 0
+	inherit counter (* Herencia *)
+	method set ini = n <- ini
+end;;
+
+let cc = new counter_set;;
+
+class counter_init n0= object (self)
+	val mutable n = 0
+	inherit counter_set
+	initializer self#set n0 (* Constructor *)
+end;;
 
