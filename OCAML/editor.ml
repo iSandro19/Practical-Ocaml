@@ -519,19 +519,27 @@ end;;
 let c3 = new counter;;
 
 c1#reset;;
-[c1#next;c1#next;c1#next];; (*[3;2;1]*)
+[c1#next;c1#next;c1#next];; (* Ojo -> [3;2;1] *)
 
 class counter_set = object
-	val mutable n = 0
 	inherit counter (* Herencia *)
 	method set ini = n <- ini
 end;;
 
-let cc = new counter_set;;
+let cs = new counter_set;;
 
-class counter_init n0= object (self)
-	val mutable n = 0
+class counter_init n0 = object (self)
 	inherit counter_set
 	initializer self#set n0 (* Constructor *)
 end;;
 
+let ci = new counter_init;;
+
+class counter_max n0 max = object (self)
+	inherit counter_init n0 as super
+	method next = let n = super#next in
+								if n <= max then n
+								else (self#reset; super#next)
+end;;
+
+let cm = new counter_max 10 15;;
