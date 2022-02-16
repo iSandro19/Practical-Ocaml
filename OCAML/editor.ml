@@ -543,3 +543,17 @@ class counter_max n0 max = object (self)
 end;;
 
 let cm = new counter_max 10 15;;
+
+type zeta = Z | S of zeta | P of zeta;;
+
+let rec simp z = match z with
+    Z | S Z | P Z -> z
+  | S z -> (match simp z with
+                  P z -> z | z -> S z)
+  | P z -> (match simp z with
+									S z -> z | z -> P z);;
+									
+
+let rec fold op l e = match l with
+		[] -> e
+	| h::t -> op h (fold op t e);;
